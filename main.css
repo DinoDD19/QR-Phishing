@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    height: 100vh;
+    width: 100%;
+    background-color: #1B1C20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .box {
+    height: 85%;
+    width: 48%;
+    margin: 10px;
+  }
+  
+  .box1 {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding-left: 50px;
+    padding-top: 50px;
+  }
+  
+  .box1 h2 {
+    font-size: 50px;
+    font-family: "Rowdies", sans-serif;
+    letter-spacing: 1px;
+    color: #63cd39;
+  }
+  
+  .box1 h2:hover {
+    text-shadow: 0px 0px 5px;
+    cursor: pointer;
+  }
+  
+  .box1 p {
+    color: #F8F8F8;
+    font-size: 20px;
+    font-family: "Sriracha", cursive;
+  }
+  
+  .box1 h4 {
+    font-size: 25px;
+    font-family: "PT Sans", sans-serif;
+    font-weight: 700;
+    color: #DAFB90;
+    margin-top: 50px;
+  }
+  
+  .box1 h4 span {
+    color: #F8F8F8;
+  }
+  
+  .box1 h4 span.real {
+    color: #63cd39;
+    font-weight: bold;
+  }
+  
+  .box1 h4 span.phishing {
+    color: #ff4444;
+    font-weight: bold;
+  }
+  
+  .box1 input {
+    display: none;
+  }
+  
+  .box2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 0;
+  }
+  
+  .box2 p {
+    font-size: 35px;
+    font-family: "PT Sans", sans-serif;
+    font-weight: 700;
+    color: #DAFB90;
+  }
+  
+  .image {
+    background-color: #f8f8f82c;
+    height: 400px;
+    width: 400px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .image label {
+    height: 100px;
+    width: 100px;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+    font-size: 50px;
+    font-weight: 700;
+    color: #F8F8F8;
+    background-color: #63cd39;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #1e1e1e9f;
+  }
+  
+  .image label:hover {
+    height: 108px;
+    width: 108px;
+    font-size: 52px;
+    box-shadow: 7px 7px 10px #1e1e1e9f;
+  }
+  
+  .gen {
+    width: 150px;
+    height: 40px;
+    margin-top: 30px;
+    background-color: #63cd39;
+    border-radius: 20px;
+    font-size: 16px;
+    color: #202020;
+  }
+  
+  .gen:hover {
+    width: 154px;
+    height: 44px;
+    margin-top: 26px;
+    cursor: pointer;
+  }
+  
+  .fix {
+    height: 300px;
+    width: 300px;
+  }

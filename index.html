@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Fake Detection</title>
+    <link rel="stylesheet" href="main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Rowdies:wght@300;400;700&family=Sriracha&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="box1 box">
+      <h2>QR Fake Detection !</h2>
+      <p>
+        Not all QR codes are safe! Upload a QR code to verify its authenticity
+        and detect potential scams or malicious links before opening. Stay
+        protected from fraud with our QR Fake Detection system!
+      </p>
+      <input type="file" id="qrInput" accept="image/*" />
+      <h4>Scanned URL: <span id="qrResult">None</span></h4>
+      <h4>Prediction: <span id="predictionResult">None</span></h4>
+    </div>
+    <div class="box2 box">
+      <p>Uploaded Image:</p>
+      <div class="image">
+        <label for="qrInput" id="plus">+</label>
+        <img id="qrImage" style="max-width: 100%" />
+      </div>
+      <button class="gen" id="genurl">Generate URL</button>
+    </div>
+
+    <script>
+      document
+        .getElementById("qrInput")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = function () {
+            const img = document.getElementById("qrImage");
+            const plus = document.getElementById("plus");
+            img.src = reader.result;
+            img.style.display = "block";
+            plus.style.display = "none";
+
+            img.onload = function () {
+              const canvas = document.createElement("canvas");
+              const ctx = canvas.getContext("2d");
+              canvas.width = img.width;
+              canvas.height = img.height;
+              ctx.drawImage(img, 0, 0, img.width, img.height);
+
+              const imageData = ctx.getImageData(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+              );
+              const qrCodeResult = jsQR(
+                imageData.data,
+                canvas.width,
+                canvas.height
+              );
+
+              const genurl = document.getElementById("genurl");
+              const res = document.getElementById("qrResult");
+              const predictionRes = document.getElementById("predictionResult");
+
+              if (imageData) {
+                const img = document.getElementById("qrImage");
+                img.classList.add("fix");
+              }
+
+              genurl.addEventListener("click", () => {
+                if (qrCodeResult) {
+                  res.innerText = qrCodeResult.data;
+                  fetch("http://localhost:5000/predict", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ url: qrCodeResult.data }),
+                  })
+                    .then((response) => response.json())
+                    .then((data) => {
+                      if (data.error) {
+                        predictionRes.innerText = `Error: ${data.error}`;
+                        predictionRes.classList.remove("real", "phishing");
+                      } else {
+                        predictionRes.innerText = data.prediction;
+                        predictionRes.classList.remove("real", "phishing");
+                        predictionRes.classList.add(
+                          data.prediction === "Real" ? "real" : "phishing"
+                        );
+                      }
+                    })
+                    .catch((error) => {
+                      predictionRes.innerText = `Error: ${error.message}`;
+                      predictionRes.classList.remove("real", "phishing");
+                    });
+                } else {
+                  alert("Nothing Found");
+                }
+              });
+            };
+          };
+          reader.readAsDataURL(file);
+        });
+    </script>
+  </body>
+</html>
