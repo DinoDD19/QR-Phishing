@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment
+.env
+venv/
+
+# Data and artifacts
+data/
+artifacts/
+
+# Models
+*.pkl
+
+# VSCode
+.vscode/
+
+# Misc
+.DS_Store
